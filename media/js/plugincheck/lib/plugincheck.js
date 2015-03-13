@@ -200,6 +200,18 @@
                 var mimes = navigator.mimeTypes;
                 var knownPlugins = data.plugins;
 
+                // :TODO: Currently the server returns Java versions with a
+                // leading ., once this is resolved, remove the following code.
+                for (var plugin in knownPlugins) {
+                    if (knownPlugins.hasOwnProperty(plugin)
+                        && plugin === 'java-runtime-environment') {
+
+                        var javaVersions = knownPlugins[plugin].versions;
+                        console.log(javaVersions);
+                        console.log(javaVersions.hasOwnProperty('all'));
+                    }
+                }
+
                 for (var i = 0, l = mimes.length; i < l; i++) {
                     var currentMime = mimes[i];
                     var pluginData = {};
