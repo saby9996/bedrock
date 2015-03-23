@@ -155,6 +155,7 @@
         * @returns The knownPlugin object or false
         */
         isKnownPlugin: function (knownPlugins, currentPlugin) {
+
             for (var plugin in knownPlugins) {
                 if(knownPlugins.hasOwnProperty(plugin)) {
                     var knownPluginName = knownPlugins[plugin].display_name;
@@ -183,6 +184,27 @@
             return false;
         },
         /**
+         * On Linux the Totem plugin handles Quicktime video but, it masquerade's
+         * as the either the Quicktime player or the Windows Media player by
+         * setting it's name accordingly. This causes problems when checking the
+         * list of known plugins, hence we need this check to determine it's real
+         * identity by looking at the filename for the enabledPlugin.
+         *
+         * @params {string} filename - The filename to check for libtotem
+         * @returns {boolean} True if it is Totem else false
+         */
+        isTotem: function(filename) {
+
+            var totemQuicktime = filename.indexOf('libtotem-narrowspace');
+            var totemWindowsMedia = filename.indexOf('libtotem-gmp');
+
+            if (totemQuicktime > -1 || totemWindowsMedia > -1) {
+                return true;
+            }
+
+            return false;
+        },
+        /**
         * Get's a list of plugins and versions as a JSON object from the database. Iterates over
         * navigator.mimeTypes to gather the installed plugins. For each known plugin, it
         * determines whether the version is the latest, is outdated or vulnerable.
@@ -190,6 +212,9 @@
         * @returns pluginList - List of known and unknown plugins
         */
         getPluginsStatus: function(endpoint, callback) {
+
+            // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1131137
+            navigator.plugins.refresh();
 
             $.getJSON(endpoint, function(data) {
 
@@ -200,28 +225,22 @@
                 var mimes = navigator.mimeTypes;
                 var knownPlugins = data.plugins;
 
-                // :TODO: Currently the server returns Java versions with a
-                // leading ., once this is resolved, remove the following code.
-                for (var plugin in knownPlugins) {
-                    if (knownPlugins.hasOwnProperty(plugin)
-                        && plugin === 'java-runtime-environment') {
-
-                        var javaVersions = knownPlugins[plugin].versions;
-                        console.log(javaVersions);
-                        console.log(javaVersions.hasOwnProperty('all'));
-                    }
-                }
-
                 for (var i = 0, l = mimes.length; i < l; i++) {
                     var currentMime = mimes[i];
                     var pluginData = {};
 
                     if(typeof currentMime !== 'undefined' && currentMime.enabledPlugin) {
                         var enabledPlugin = currentMime.enabledPlugin;
+                        var pluginName = enabledPlugin.name;
+
+                        // on Linux we need to check whether this in fact the totem plugin?
+                        if (clientOS === 'lin' && PluginCheck.isTotem(enabledPlugin.filename)) {
+                            pluginName = 'Totem';
+                        }
 
                         if($.inArray(enabledPlugin.name, pluginNames) === -1) {
                             pluginData = {
-                                name: enabledPlugin.name,
+                                name: pluginName,
                                 version: enabledPlugin.version,
                                 description: enabledPlugin.description
                             };
