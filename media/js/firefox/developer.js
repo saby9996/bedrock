@@ -27,16 +27,6 @@ function onYouTubeIframeAPIReady() {
         }
     };
 
-    // Setup GA tracking for misc links
-    $('.feature .more').on('click', function(e) {
-        trackClick([
-            '_trackEvent',
-            '/firefox/developer/ Interactions',
-            'learn more link clicks',
-            $(this).text()
-        ], $(this).attr('href'), e);
-    });
-
     // GA tracking for download buttons
     $('.intro .download-link').on('click', function(e) {
         trackClick([
