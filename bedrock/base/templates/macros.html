@@ -287,7 +287,7 @@
   {%- else -%}
     {% set label = _('Follow') %}
   {%- endif -%}
-  <a href="https://twitter.com/{{ account_id }}" title="{{ _('Follow %s on Twitter')|format(account_name) }}" class="twitter-follow-button" data-social-network="twitter-only" data-social-action="Twitter Follow">{{ label }}</a>
+  <a href="https://twitter.com/{{ account_id }}" title="{{ _('Follow %s on Twitter')|format(account_name) }}" class="twitter-follow-button" data-social-network="twitter-only" data-social-action="Follow">{{ label }}</a>
 {%- endmacro %}
 
 {% macro twitter_timeline_widget(title='', heading_level=3, max_length=0) -%}

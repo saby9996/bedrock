@@ -658,34 +658,43 @@
 
   function trackGAPageNoScroll () {
     $('#adapt1').waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'It adapts, so you can too']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'It adapts, so you can too'});
     });
     $('#adapt2').waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Adaptive App Search']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Adaptive App Search'});
     });
     $have_it_all.waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Have it All']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Have it All'});
     });
     $('#mission').waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Transform the Future']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Transform the Future'});
     });
   }
 
   function trackGAPageScroller () {
     $soccer_hook.waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'It adapts, so you can too']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'It adapts, so you can too'});
     });
     $cafe_hook.waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Adaptive App Search (restaurant)']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Adaptive App Search (restaurant)'});
     });
     $bday_hook.waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Adaptive App Search (birthday)']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Adaptive App Search (birthday)'});
     });
     $have_it_all.waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Have it All']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Have it All'});
     });
     $('#mission').waypoint(function () {
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'scroll', 'Transform the Future']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({event: 'scroll-tracking', section: 'Transform the Future'});
     });
   }
 

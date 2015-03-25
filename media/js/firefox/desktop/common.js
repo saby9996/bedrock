@@ -67,7 +67,8 @@
     $('.ga-section').waypoint(function(dir) {
         // only track scrolling down
         if (dir === 'down') {
-            gaTrack(['_trackEvent', 'firefox/desktop/ Interactions', 'scroll', $(this).data('ga-label')]);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({event: 'scroll-tracking', section: $(this).data('ga-label')});
         }
     }, {
         offset: 100

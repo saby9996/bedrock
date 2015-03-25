@@ -68,8 +68,10 @@ function init_lang_switcher() {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             'event': 'change-language',
-            'selected-language': $(this).val()
+            'selected-language': $(this).val(),
                     //e.g. 'Spanish', etc.
+
+            'eventCallback': function() {$('#lang_form').submit();}
         });
     });
 }

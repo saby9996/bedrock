@@ -40,26 +40,6 @@ function onYouTubeIframeAPIReady() {
         }
     };
 
-    // Setup GA tracking for misc links
-    $('.feature .more').on('click', function(e) {
-        trackClick([
-            '_trackEvent',
-            'Developer /firstrun/ Interactions',
-            'learn more link clicks',
-            $(this).text()
-        ], $(this).attr('href'), e);
-    });
-
-    // Setup GA tracking for theme reset link
-    $('.notice .more').on('click', function(e) {
-        trackClick([
-            '_trackEvent',
-            'Developer /firstrun/ Interactions',
-            'learn more link clicks',
-            'Want the old look back?'
-        ], $(this).attr('href'), e);
-    });
-
     function onYouTubeIframeAPIReady() {
 
         // show video modal when user clicks a video play link
