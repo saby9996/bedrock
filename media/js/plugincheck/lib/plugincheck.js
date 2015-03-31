@@ -2,35 +2,7 @@
 
 (function(exports) {
 
-    var clientOS = Utils.getOS();
-
-    /**
-    * Returns the latest and vulnrable known versions for the current plugin.
-    * @params {object} knownPluginReleases
-    * @returns The latest and vulnerable versions for this plugin.
-    */
-    function getKnownVersionInfo(knownPluginReleases) {
-        var latest;
-        var vulnerable;
-
-        // See whether we have data for the current OS
-        if (knownPluginReleases.hasOwnProperty(clientOS)) {
-
-            // Combine all release for the current OS and
-            // versions marked for all operating systems.
-            latest = knownPluginReleases[clientOS].latest.concat(
-                knownPluginReleases['all'].latest
-            );
-            vulnerable = knownPluginReleases[clientOS].vulnerable.concat(
-                knownPluginReleases['all'].vulnerable
-            );
-        } else if (knownPluginReleases.hasOwnProperty('all')) {
-            latest = knownPluginReleases['all'].latest;
-            vulnerable = knownPluginReleases['all'].vulnerable;
-        }
-
-        return { latest: latest, vulnerable: vulnerable };
-    }
+    var clientOS = Utils.getOS(navigator.userAgent);
 
     /**
      * Java plugin version numbers are exposed with a leading 1. which obscures
@@ -53,6 +25,21 @@
     }
 
     /**
+    * Creates and populates a plugin object for an unknown plugin.
+    * @param {object} pluginInfo - Information about the plugin from the plugins DB
+    * @param {object} currentPlugin - The current installed plugin with info from the browser.
+    * @returns The unknown plugin as an object
+    */
+    function populateUnknownPlugin (currentPlugin) {
+        return {
+            name: currentPlugin.name,
+            version: currentPlugin.version,
+            description: currentPlugin.description,
+            status: 'unknown'
+        };
+    }
+
+    /**
      * Sets the status of the current plugin.
      *
      * @param {object} plugin - The plugin object to update
@@ -63,7 +50,7 @@
      * plugins, the vulnerability_description and vulnerability_url fields are
      * also set.
      */
-    function setPluginStatus(plugin, installedVersion, knownVersions) {
+     function setPluginStatus (plugin, installedVersion, knownVersions) {
         // sort versions from low to high
         knownVersions.latest.sort(function(v1, v2) {
             // TODO: the server currently returns some versions with a leading
@@ -106,6 +93,33 @@
 
     var PluginCheck = {
         /**
+        * Returns the latest and vulnrable known versions for the current plugin.
+        * @params {object} knownPluginReleases
+        * @returns The latest and vulnerable versions for this plugin.
+        */
+        getKnownVersionInfo:function (knownPluginReleases) {
+            var latest;
+            var vulnerable;
+
+            // See whether we have data for the current OS
+            if (knownPluginReleases.hasOwnProperty(clientOS)) {
+
+                // Combine all release for the current OS and
+                // versions marked for all operating systems.
+                latest = knownPluginReleases[clientOS].latest.concat(
+                    knownPluginReleases['all'].latest
+                );
+                vulnerable = knownPluginReleases[clientOS].vulnerable.concat(
+                    knownPluginReleases['all'].vulnerable
+                );
+            } else if (knownPluginReleases.hasOwnProperty('all')) {
+                latest = knownPluginReleases['all'].latest;
+                vulnerable = knownPluginReleases['all'].vulnerable;
+            }
+
+            return { latest: latest, vulnerable: vulnerable };
+        },
+        /**
         * Populate the plugin object with the required data for the UI.
         * @param {object} pluginInfo - Information about the plugin from the plugins DB
         * @param {object} currentPlugin - The current installed plugin with info from the browser.
@@ -121,7 +135,7 @@
             }
 
             var plugin = {};
-            var knownVersions = getKnownVersionInfo(pluginInfo.versions);
+            var knownVersions = PluginCheck.getKnownVersionInfo(pluginInfo.versions);
             var description = pluginInfo.description || currentPlugin.description;
 
             plugin = {
@@ -132,20 +146,6 @@
             };
 
             return setPluginStatus(plugin, installedVersion, knownVersions);
-        },
-        /**
-        * Creates and populates a plugin object for an unknown plugin.
-        * @param {object} pluginInfo - Information about the plugin from the plugins DB
-        * @param {object} currentPlugin - The current installed plugin with info from the browser.
-        * @returns The unknown plugin as an object
-        */
-        populateUnknownPlugin: function(currentPlugin) {
-            return {
-                name: currentPlugin.name,
-                version: currentPlugin.version,
-                description: currentPlugin.description,
-                status: 'unknown'
-            };
         },
         /**
         * Determines whether we are dealing with one of the known plugins and returns it,
@@ -258,7 +258,7 @@
                     if (pluginInfo) {
                         pluginList.push(PluginCheck.populatePluginObject(pluginInfo, currentInstalledPlugin));
                     } else {
-                        pluginList.push(PluginCheck.populateUnknownPlugin(currentInstalledPlugin));
+                        pluginList.push(populateUnknownPlugin(currentInstalledPlugin));
                     }
                 }
 

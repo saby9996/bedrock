@@ -5,13 +5,14 @@
         * operating system. If a match is found, it returns the identity as set
         * in the operatingSystems array. Based on PPK's BrowserDetect library.
         *
+        * @param {string} userAgent - The navigator.userAgent string
+        *
         * @returns The operating system identity or Unknown OS
         */
-        getOS: function() {
+        getOS: function(userAgent) {
             var operatingSystems = [{ substring: 'Win', identity: 'win' },
                 { substring: 'Mac', identity: 'mac' },
                 { substring: 'Linux', identity: 'lin' }];
-            var userAgent = navigator.userAgent;
 
             for (var i = 0, l = operatingSystems.length; i < l; i++) {
                 var currentOS = operatingSystems[i];

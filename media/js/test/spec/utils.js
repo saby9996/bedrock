@@ -6,6 +6,9 @@
 
 describe("utils.js", function() {
 
+    var macUA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:36.0) Gecko/20100101 Firefox/36.0';
+    var winUA = 'Mozilla/5.0 (Windows NT 6.1; rv:36.0) Gecko/20100101 Firefox/36.0';
+    var linUA = 'Mozilla/5.0 (X11; Linux i586; rv:31.0) Gecko/20100101 Firefox/31.0';
     var knownVersions = [];
 
     // set some variable values used by the below tests.
@@ -20,8 +23,18 @@ describe("utils.js", function() {
     });
 
     it('should return mac', function() {
-        var os = Utils.getOS();
+        var os = Utils.getOS(macUA);
         expect(os).toBe('mac');
+    });
+
+    it('should return win', function() {
+        var os = Utils.getOS(winUA);
+        expect(os).toBe('win');
+    });
+
+    it('should return lin', function() {
+        var os = Utils.getOS(linUA);
+        expect(os).toBe('lin');
     });
 
     it('should return plugin info object for a match', function() {
