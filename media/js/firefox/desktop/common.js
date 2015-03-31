@@ -55,33 +55,15 @@
         });
     }
 
-    // set up common GA tracking
-    var trackOutboundLink = function(a) {
-        var href = a.href;
-
-        gaTrack(['_trackEvent', 'firefox/desktop/ Interactions', 'outbound link', href], function() {
-            window.location = href;
-        });
-    };
-
     $('.ga-section').waypoint(function(dir) {
         // only track scrolling down
         if (dir === 'down') {
-            gaTrack(['_trackEvent', 'firefox/desktop/ Interactions', 'scroll', $(this).data('ga-label')]);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({event: 'desktop-scroll', section: $(this).data('ga-label')});
         }
     }, {
         offset: 100
     });
 
-    $('a[rel="external"]').on('click', function(e) {
-        e.preventDefault();
 
-        trackOutboundLink(this);
-    });
-
-    $('.ga-track-links a').on('click', function(e) {
-        e.preventDefault();
-
-        trackOutboundLink(this);
-    });
 })(window.jQuery);
