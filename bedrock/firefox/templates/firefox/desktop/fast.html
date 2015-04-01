@@ -40,7 +40,7 @@
 
       <h3>{{ _('The “speed king”') }}</h3>
 
-      <p class="ga-track-links" data-interaction="outbound link">
+      <p class="ga-track-links">
         {% set l10n_url={
           'fr': 'http://www.tomshardware.fr/articles/test-navigateurs-chrome-firefox-opera,2-64.html',
           'it': 'http://www.tomshw.it/cont/articolo/chrome-27-firefox-22-ie10-e-opera-next-lotta-per-la-supremazia/47278/1.html',
@@ -49,7 +49,7 @@
         {% trans url1=l10n_url.get(
             request.locale,
             'http://www.tomshardware.com/reviews/chrome-27-firefox-21-opera-next,3534.html') %}
-        Firefox outperformed other browsers in recent independent tests to be named <br class="wide-br">the <a href="{{ url1 }}">“speed king.”</a>
+        Firefox outperformed other browsers in recent independent tests to be named <br class="wide-br">the <a href="{{ url1 }}" data-interaction="outbound link">“speed king.”</a>
         {% endtrans %}
         {{ _('So you can browse with confidence with the fastest on the Web.') }}
       </p>
