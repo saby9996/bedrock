@@ -41,10 +41,10 @@
         };
         window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            window.dataLayer.push({event: 'products-interactions', interaction: 'product click', product: product});
+            window.dataLayer.push({event: 'products-interactions', interaction: 'product click', productName: product});
         } else {
             e.preventDefault();
-            window.dataLayer.push({event: 'products-interactions', interaction: 'product click', product: product, eventCallback: callback});
+            window.dataLayer.push({event: 'products-interactions', interaction: 'product click', productName: product, eventCallback: callback});
         }
     });
 
@@ -58,10 +58,10 @@
         };
         window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            window.dataLayer.push({event: 'products-interactions', interaction: 'Firefox downloads', product: product});
+            window.dataLayer.push({event: 'products-interactions', interaction: 'Firefox downloads', productName: product});
         } else {
             e.preventDefault();
-            window.dataLayer.push({event: 'products-interactions', interaction: 'Firefox downloads', product: product, eventCallback: callback});
+            window.dataLayer.push({event: 'products-interactions', interaction: 'Firefox downloads', productName: product, eventCallback: callback});
         }
     });
 
