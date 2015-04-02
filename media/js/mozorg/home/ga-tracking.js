@@ -28,7 +28,8 @@ $(function () {
     $('.module').waypoint(function(direction) {
         if (direction === 'down') {
             var id = $(this).prop('id');
-            gaTrack(['_trackEvent', 'Homepage Interactions', 'scroll', id]);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({event: 'scroll-tracking', section: id});
         }
     }, { offset: '100%' });
 

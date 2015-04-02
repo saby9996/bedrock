@@ -27,7 +27,8 @@ $(function () {
         $('#landing .section').waypoint(function(direction) {
             if (direction === 'down') {
                 var sectionclass = $(this).prop('class');
-                gaTrack(['_trackEvent', 'Contribute Landing Interactions', 'scroll', sectionclass]);
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({event: 'scroll-tracking', section: sectionclass});
             }
         }, { offset: '100%' });
 
