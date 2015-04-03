@@ -141,7 +141,6 @@
                 }
 
                 window.location.hash = pager.currentPage.id.replace('-tip', '');
-                console.log(pager.currentPage.id);
                 // GA tracking
                 var gaAction = (isPrev) ? 'prev link to' : 'next link to';
                 window.dataLayer = window.dataLayer || [];
