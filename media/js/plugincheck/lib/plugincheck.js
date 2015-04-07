@@ -1,6 +1,8 @@
-/*globals Utils */
+/*globals Utils, versionCompare */
 
 (function(exports) {
+
+    'use strict';
 
     var clientOS = Utils.getOS(navigator.userAgent);
 
@@ -11,11 +13,13 @@
      * @returns The Java version number excluding the leading 1.
      */
     function setJavaVersion() {
-        var mimes = navigator.mimeTypes["application/x-java-applet"].enabledPlugin;
+        var type;
+        var installedVersion;
+        var mimes = navigator.mimeTypes['application/x-java-applet'].enabledPlugin;
 
         for (var mime in mimes) {
             if(mimes.hasOwnProperty(mime) && mime.indexOf('jpi-version') > -1) {
-                var type = mime;
+                type = mime;
                 // + 3 to strip of the leading 1. in java versions
                 installedVersion = type.substring(type.indexOf('=') + 3)
                     .replace('_', '.');
@@ -76,13 +80,13 @@
 
             return plugin;
 
-        } else if (!(installedVersion > knownAbsLatest)) {
+        } else if (versionCompare(installedVersion, knownAbsLatest) < 0) {
 
             // it is not the latest but also not vulnerable so, just outdated
             plugin['status'] = 'outdated';
             return plugin;
 
-        } else if (installedVersion > knownAbsLatest) {
+        } else if (versionCompare(installedVersion, knownAbsLatest) > 0) {
 
             // if newer than our known absolutely latest version, set status as newer but currently,
             // it will still show up as up to date (latest) in the UI
@@ -129,7 +133,7 @@
             var installedVersion = currentPlugin.version;
 
             if (currentPlugin.name.indexOf('Java') > -1 &&
-                'undefined' !== navigator.mimeTypes["application/x-java-applet"]) {
+                'undefined' !== navigator.mimeTypes['application/x-java-applet']) {
                     // we need todo some extra work to get a decent version number
                     installedVersion = setJavaVersion();
             }
@@ -229,7 +233,7 @@
                     var currentMime = mimes[i];
                     var pluginData = {};
 
-                    if(typeof currentMime !== 'undefined' && currentMime.enabledPlugin) {
+                    if (typeof currentMime !== 'undefined' && currentMime.enabledPlugin) {
                         var enabledPlugin = currentMime.enabledPlugin;
                         var pluginName = enabledPlugin.name;
 
@@ -238,7 +242,7 @@
                             pluginName = 'Totem';
                         }
 
-                        if($.inArray(enabledPlugin.name, pluginNames) === -1) {
+                        if ($.inArray(enabledPlugin.name, pluginNames) === -1) {
                             pluginData = {
                                 name: pluginName,
                                 version: enabledPlugin.version,

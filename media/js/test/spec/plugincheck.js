@@ -198,11 +198,11 @@
 
      });
 
-     it('should return true', function() {
+     it('should return true Totem file name types', function() {
          expect(PluginCheck.isTotem('libtotem-narrowspace-plugin.so')).toBe(true);
      });
 
-     it('should return false', function() {
+     it('should return false, as this is VLC', function() {
          expect(PluginCheck.isTotem('libtotem-cone-plugin.so')).toBe(false);
      });
 

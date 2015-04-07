@@ -1,5 +1,10 @@
+/*globals versionCompare */
+
 (function(exports) {
-    Utils = {
+
+    'use strict';
+
+    var Utils = {
         /**
         * Tests a substring against the userAgent string to determine the current
         * operating system. If a match is found, it returns the identity as set
@@ -47,7 +52,7 @@
             }
             return false;
         }
-    }
+    };
 
     exports.Utils = Utils;
 
