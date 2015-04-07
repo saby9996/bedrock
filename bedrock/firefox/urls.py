@@ -44,6 +44,7 @@ urlpatterns = patterns('',
     page('firefox/android', 'firefox/android/index.html'),
     page('firefox/android/faq', 'firefox/android/faq.html'),
     page('firefox/os/faq', 'firefox/os/faq.html'),
+    page('firefox/products', 'firefox/family/index.html'),
     url('^firefox/sms/$', views.sms_send, name='firefox.sms'),
     page('firefox/sms/sent', 'firefox/android/sms-thankyou.html'),
     page('firefox/sync', 'firefox/sync.html'),
@@ -73,7 +74,13 @@ urlpatterns = patterns('',
     # This dummy page definition makes it possible to link to /firefox/ (Bug 878068)
     url('^firefox/$', views.fx_home_redirect, name='firefox'),
 
-    url('^firefox/os/$', views.firefox_os_index, name='firefox.os.index'),
+    url('^firefox/os/$', views.firefox_os_geo_redirect, name='firefox.os.index'),
+    page('firefox/os/2.0', 'firefox/os/ver/2.0.html'),
+    page('firefox/os/1.4', 'firefox/os/ver/1.4.html'),
+    page('firefox/os/1.3t', 'firefox/os/ver/1.3T.html'),
+    page('firefox/os/1.3', 'firefox/os/ver/1.3.html'),
+    page('firefox/os/1.1', 'firefox/os/ver/1.1.html'),
+
     page('firefox/os/releases', 'firefox/os/releases.html'),
 
     page('mwc', 'firefox/os/mwc-2015-preview.html',
@@ -84,7 +91,6 @@ urlpatterns = patterns('',
         decorators=waffle_switch('firefox-os-tv')),
 
     page('firefox/independent', 'firefox/independent.html'),
-
 
     # Release notes
     url('^(?:%s)/(?:%s/)?notes/$' % (product_re, channel_re),
@@ -105,4 +111,8 @@ urlpatterns = patterns('',
         name='firefox.os.releasenotes'),
     url('^firefox/releases/$', bedrock.releasenotes.views.releases_index,
         {'product': 'Firefox'}, name='firefox.releases.index'),
+
+    # Bug 1108828. Different templates for different URL params.
+    url('firefox/feedback', views.FeedbackView.as_view(), name='firefox.feedback'),
+
 )
