@@ -32,7 +32,7 @@ function versionCompare(v1, v2, options) {
 
     'use strict';
 
-    var lexicographical = options && options.lexicographical,
+    var lexicographical = options && options.lexicographical;
     var zeroExtend = options && options.zeroExtend;
     var v1parts = v1.split('.');
     var v2parts = v2.split('.');

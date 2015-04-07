@@ -1,18 +1,8 @@
 $(function() {
     'use strict';
 
-    var nonFxDownload = $('#main-feature > .download-button');
     var outdatedFx = $('.version-message-container');
-
-    // show main download button to non Fx traffic
-    if(!isFirefox()) {
-        nonFxDownload.css('display', 'inline-block');
-    }
-
-    // show for outdated Fx versions
-    if (isFirefox() &&  !isFirefoxUpToDate() && !isFirefox31ESR()) {
-        outdatedFx.show();
-    }
+    var wrapper = $('#wrapper');
 
     var readerRegEx = /Adobe \b(Reader|Acrobat)\b.*/;
     var iconFor = function (pluginName) {
@@ -161,9 +151,22 @@ $(function() {
         }
     }
 
-    PluginCheck.getPluginsStatus('https://plugins.mozilla.org/en-us/plugins_list.json?callback=?',
-        function(response) {
-            displayPlugins(response);
-        }
-    );
+    // show main download button to non Fx traffic
+    if(!isFirefox()) {
+        wrapper.addClass('non-fx');
+    }
+
+    // show for outdated Fx versions
+    if (isFirefox() &&  !isFirefoxUpToDate() && !isFirefox31ESR()) {
+        outdatedFx.show();
+    }
+
+    // only execute the plugincheck code if this is Firefox
+    if (isFirefox()) {
+        PluginCheck.getPluginsStatus('https://plugins.mozilla.org/en-us/plugins_list.json?callback=?',
+            function(response) {
+                displayPlugins(response);
+            }
+        );
+    }
 });

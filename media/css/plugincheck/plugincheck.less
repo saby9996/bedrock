@@ -246,6 +246,29 @@ html[dir="rtl"] {
 .footer-newsletter-form {
     padding: 40px 20px;
 }
+// assume Fx users by default and hide nonFx user info.
+.not-supported {
+    display: none;
+}
+// Styles to show information for nonFx users
+.non-fx {
+    main,
+    .pluginfaq-container {
+        display: none;
+    }
+    .not-supported {
+        display: block;
+        #main-feature {
+            padding-bottom: 28px;
+        }
+        section {
+            background-color: #fff;
+            margin-bottom: 32px;
+            padding: 32px;
+            text-align: center;
+        }
+    }
+}
 
 /* Tablet Layout: 760px */
 @media only screen and (min-width: @breakTablet) and (max-width: @breakDesktop) {
