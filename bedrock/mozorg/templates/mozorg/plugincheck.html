@@ -78,7 +78,6 @@
 {% block content %}
 <main role="main">
   <header id="main-feature">
-      {{ download_firefox(small=True) }}
       <h1 class="large">{{_('Check Your Plugins')}}</h1>
       <p class="preamble">{{_('Keeping your plugins up to date helps Firefox run safely and smoothly.')}}</p>
   </header>
@@ -239,6 +238,19 @@
     </div>
     <p><a href="#top">{{_('Back to Top')}}</a></p>
 </section>
+
+<!-- dislayed to nonFx users -->
+<div class="not-supported">
+  <header id="main-feature">
+      <h1 class="large">{{_('Check Your Plugins')}}</h1>
+      <p class="preamble">{{_('Keeping your plugins up to date helps Firefox run safely and smoothly.')}}</p>
+  </header>
+
+  <section>
+    <p>{{_('Currently the plugin check service is only available to Firefox users.')}}</p>
+    {{ download_firefox(small=True) }}
+  </section>
+</div>
 {% endblock %}
 
 {% block js %}
