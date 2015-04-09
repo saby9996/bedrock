@@ -53,13 +53,13 @@
         Mozilla.UITour.observe(function(e) {
             switch (e) {
                 case 'Loop:ChatWindowOpened':
-                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'StartConversation-NoTour']);
+                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'StartConversation-NoTour'});
                     break;
                 case 'Loop:RoomURLCopied':
-                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'URLCopied-NoTour']);
+                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLCopied-NoTour'});
                     break;
                 case 'Loop:RoomURLEmailed':
-                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'URLEmailed-NoTour']);
+                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLEmailed-NoTour'});
                     break;
             }
         });
@@ -91,10 +91,10 @@
             var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
             var href = this.href;
             if (newTab) {
-                w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', eventName]);
+                w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName});
             } else {
                 e.preventDefault();
-                w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', eventName], function() {
+                w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName}, function() {
                     w.location = href;
                 });
             }
@@ -149,7 +149,7 @@
                                 Mozilla.UITour.hideMenu('loop');
                             });
 
-                            w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'Open']);
+                            w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'Open'});
 
                             // hide the hello panel when browser resizes due to
                             // https://bugzilla.mozilla.org/show_bug.cgi?id=1091785
@@ -165,13 +165,13 @@
                     // enable/disable listeners when document visibility changes
                     $document.on('visibilitychange', handleVisibilityChange);
 
-                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'EligibleView']);
+                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'EligibleView'});
                 } else {
                     // if Hello is not in toolbar/menu, change footer button to link
                     // to a SUMO article and do some GA tracking
                     addLinkEvent('#try-hello-footer', 'IneligibleClick');
 
-                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'IneligibleView']);
+                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'IneligibleView'});
                 }
             });
         } else {
@@ -205,7 +205,7 @@
     });
 
     $video.on('play', function() {
-        w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'PlayVideo']);
+        w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'PlayVideo'});
     });
 
     Mozilla.FxFamilyNav.init({ primaryId: 'desktop', subId: 'hello' });
